@@ -1,0 +1,112 @@
+package app
+
+import (
+	"fmt"
+
+	"github.com/rivo/tview"
+)
+
+type SpriteInfo struct {
+	Health   int
+	Location string
+}
+
+type View struct {
+	Menu *tview.List
+}
+
+type Command struct {
+	ID          string
+	Menu        string
+	Label       string
+	Description string
+	Shortcut    rune
+	Run         func(*App)
+}
+
+func (a *App) SetCommands() {
+	a.Commands = []Command{
+		{
+			ID:          "feed",
+			Menu:        "main",
+			Label:       "feed",
+			Description: "feeds the creature",
+			Shortcut:    'f',
+			Run: func(a *App) {
+				a.Spriteinfo.Health--
+			},
+		},
+		{
+			ID:          "pet",
+			Menu:        "main",
+			Label:       "pet",
+			Description: "play with your character",
+			Shortcut:    'p',
+			Run: func(a *App) {
+				fmt.Println("hi")
+			},
+		},
+		{
+			ID:          "move",
+			Menu:        "main",
+			Label:       "move",
+			Description: "move your character",
+			Shortcut:    'm',
+			Run: func(a *App) {
+				a.SetMenu("move")
+			},
+		},
+		{
+			ID:          "ocean",
+			Menu:        "move",
+			Label:       "ocean",
+			Description: "go to the ocean",
+			Shortcut:    'o',
+			Run: func(a *App) {
+				a.Spriteinfo.Location = "ocean"
+				a.SetMenu("main")
+			},
+		},
+		{
+			ID:          "forest",
+			Menu:        "move",
+			Label:       "forest",
+			Description: "go to the ocean",
+			Shortcut:    'f',
+			Run: func(a *App) {
+				a.Spriteinfo.Location = "forest"
+				a.SetMenu("main")
+			},
+		},
+
+		{
+			ID:          "barn",
+			Menu:        "move",
+			Label:       "barn",
+			Description: "go to the barn",
+			Shortcut:    'f',
+			Run: func(a *App) {
+				a.Spriteinfo.Location = "barn"
+				a.SetMenu("main")
+			},
+		},
+	}
+}
+
+func (a *App) SetMenu(menu string) {
+	a.View.Menu.Clear()
+
+	for _, cmd := range a.Commands {
+		if cmd.Menu != menu {
+			continue
+		}
+
+		c := cmd // closure safety
+		a.View.Menu.AddItem(
+			c.Label,
+			c.Description,
+			c.Shortcut,
+			func() { c.Run(a) },
+		)
+	}
+}
