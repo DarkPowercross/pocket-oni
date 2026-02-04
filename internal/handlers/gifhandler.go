@@ -87,7 +87,7 @@ func GenerateGifBackground(gifimage, background image.Image) image.Image {
 
 	draw.Draw(result, result.Bounds(), background, image.Point{0, 0}, draw.Src)
 
-	draw.Draw(result, gifimage.Bounds().Add(image.Point{20, 30}), gifimage, image.Point{0, 0}, draw.Over)
+	draw.Draw(result, gifimage.Bounds().Add(image.Point{0, 0}), gifimage, image.Point{0, 0}, draw.Over)
 
 	return result
 

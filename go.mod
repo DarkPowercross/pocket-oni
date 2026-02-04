@@ -1,4 +1,4 @@
-module github.com/Darkpowercross/tamagotchi
+module github.com/Darkpowercross/pocket-oni
 
 go 1.25.4
 

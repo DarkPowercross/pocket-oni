@@ -11,8 +11,11 @@ import (
 )
 
 type SpriteMetaData struct {
-	Health   int
-	Location string
+	Health    int
+	Location  string
+	Happiness int
+	Food      int
+	State     string
 }
 
 type App struct {
@@ -28,17 +31,17 @@ type App struct {
 type view struct {
 	CharacterimageView *tview.Image
 	Menu               *tview.List
-	Header             *tview.TextView
+	Header             *tview.Flex
 	Bar                *tview.Flex
 	SpriteLocation     *tview.TextView
+	SpriteHappiness    *tview.TextView
+	SpriteHunger       *tview.TextView
 
-	SpriteHealth       *tview.TextView
+	SpriteHealth *tview.TextView
 }
 
-// create an tview application varqff
 func (a *App) Appstart() {
 	a.App = tview.NewApplication()
-	// a.SetCharacter(true, "Animated Sprite")
 
 	a.ApplyLayout()
 	a.SetCommands()
@@ -60,11 +63,11 @@ func (a *App) InputHandler() {
 
 func (a *App) AnimateGIF(ctx context.Context) {
 	frames, delay := a.GetCurrentImages()
-	if len(frames) == 0 {
+	if len(*frames) == 0 {
 		return
 	}
 
-	ticker := time.NewTicker(delay)
+	ticker := time.NewTicker(time.Duration(delay) * time.Millisecond * 5)
 	defer ticker.Stop()
 
 	i := 0
@@ -75,14 +78,18 @@ func (a *App) AnimateGIF(ctx context.Context) {
 			return
 
 		case <-ticker.C:
-			i = (i + 1) % len(frames)
+			frames, _ := a.GetCurrentImages()
+			if len(*frames) == 0 {
+				return
+			}
+
+			frame := (*frames)[i]
+			i = (i + 1) % len(*frames)
 
 			a.App.QueueUpdateDraw(func() {
-				a.View.CharacterimageView.SetImage(frames[i])
+				a.View.CharacterimageView.SetImage(frame)
 				a.UpdateBar()
 			})
-
-			time.Sleep(20 * time.Millisecond)
 		}
 	}
 }
@@ -96,6 +103,8 @@ func (a *App) ApplyRoot() {
 
 	a.View.Bar.AddItem(a.View.SpriteLocation, 3, 1, true)
 	a.View.Bar.AddItem(a.View.SpriteHealth, 3, 1, true)
+	a.View.Bar.AddItem(a.View.SpriteHappiness, 3, 1, true)
+	a.View.Bar.AddItem(a.View.SpriteHunger, 3, 1, true)
 
 	a.Approot = tview.NewFlex().SetDirection(tview.FlexRow).
 		AddItem(a.View.Header, 3, 1, false).
@@ -111,18 +120,56 @@ func (a *App) UpdateBar() {
 	a.View.SpriteHealth.SetText(
 		fmt.Sprintf("Health: %d", a.Spriteinfo.Health),
 	)
+	a.View.SpriteHappiness.SetText(
+		fmt.Sprintf("Happiness: %d", a.Spriteinfo.Happiness),
+	)
+	a.View.SpriteHunger.SetText(
+		fmt.Sprintf("Food: %d", a.Spriteinfo.Food),
+	)
 }
 
-func (a *App) GetCurrentImages() ([]image.Image, time.Duration) {
-	switch a.Spriteinfo.Location {
-	case "forest":
-		return a.CharacterMood.Happy.Forest.Images, time.Duration(a.CharacterMood.Happy.Forest.Delay[0])
-	case "Ocean":
-		return a.CharacterMood.Happy.Ocean.Images, time.Duration(a.CharacterMood.Happy.Ocean.Delay[0])
-	case "Barn":
-		return a.CharacterMood.Happy.Barn.Images, time.Duration(a.CharacterMood.Happy.Barn.Delay[0])
+func (a *App) GetCurrentImages() (*[]image.Image, time.Duration) {
+	// 1. Map state → *Location
+	states := map[string]*Location{
+		"Happy": &a.CharacterMood.Happy,
+		"Sad":   &a.CharacterMood.Sad,
+		"Sick":  &a.CharacterMood.Sick,
+		"Angry": &a.CharacterMood.Angry,
+		"Eating": &a.CharacterMood.Eating,
+	}
 
-	default:
-		return a.CharacterMood.Happy.Forest.Images, time.Duration(a.CharacterMood.Happy.Forest.Delay[0])
+	// 2. Resolve state (fallback to Happy)
+	state, ok := states[a.Spriteinfo.State]
+	if !ok || state == nil {
+		state = &a.CharacterMood.Happy
+	}
+
+	// 3. Map location → *Mood
+	locations := map[string]*Mood{
+		"forest": &state.Forest,
+		"ocean":  &state.Ocean,
+		"barn":   &state.Barn,
+	}
+
+	// 4. Resolve location (fallback to forest)
+	mood, ok := locations[a.Spriteinfo.Location]
+	if !ok || mood == nil {
+		mood = &state.Forest
+	}
+
+	// 5. Safe delay handling
+	var delay time.Duration
+	if len(mood.Delay) > 0 {
+		delay = time.Duration(mood.Delay[0])
+	}
+
+	return &mood.Images, delay
+}
+
+func (a *App) UpdateStats() {
+	for {
+		time.Sleep(time.Second * 10)
+		a.Spriteinfo.Health -= 1
+		a.Spriteinfo.State = "Sick"
 	}
 }

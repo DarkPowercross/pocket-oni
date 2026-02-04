@@ -1,8 +1,6 @@
 package app
 
 import (
-	"fmt"
-
 	"github.com/rivo/tview"
 )
 
@@ -33,7 +31,7 @@ func (a *App) SetCommands() {
 			Description: "feeds the creature",
 			Shortcut:    'f',
 			Run: func(a *App) {
-				a.Spriteinfo.Health--
+				a.Spriteinfo.Food += 1
 			},
 		},
 		{
@@ -43,7 +41,7 @@ func (a *App) SetCommands() {
 			Description: "play with your character",
 			Shortcut:    'p',
 			Run: func(a *App) {
-				fmt.Println("hi")
+				a.Spriteinfo.Happiness += 1
 			},
 		},
 		{
@@ -90,6 +88,16 @@ func (a *App) SetCommands() {
 				a.SetMenu("main")
 			},
 		},
+		{
+			ID:          "return",
+			Menu:        "move",
+			Label:       "return",
+			Description: "go to the barn",
+			Shortcut:    'r',
+			Run: func(a *App) {
+				a.SetMenu("main")
+			},
+		},
 	}
 }
 
@@ -101,7 +109,7 @@ func (a *App) SetMenu(menu string) {
 			continue
 		}
 
-		c := cmd // closure safety
+		c := cmd
 		a.View.Menu.AddItem(
 			c.Label,
 			c.Description,

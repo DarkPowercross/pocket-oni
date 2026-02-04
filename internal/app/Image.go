@@ -4,7 +4,7 @@ import (
 	"image"
 	"os"
 
-	"github.com/Darkpowercross/tamagotchi/internal/handlers"
+	"github.com/Darkpowercross/pocket-oni/internal/handlers"
 	"github.com/rivo/tview"
 )
 
@@ -22,10 +22,11 @@ func (a *App) SetCharacter(setborder bool, title string) {
 }
 
 type ImageMood struct {
-	Happy Location
-	Sad   Location
-	Sick  Location
-	Angry Location
+	Happy  Location
+	Sad    Location
+	Sick   Location
+	Angry  Location
+	Eating Location
 }
 
 type Location struct {
@@ -41,10 +42,10 @@ type Mood struct {
 
 func (a *App) GetMoodImages(chardir string, background string) {
 	scaledFrames, delay := handlers.ScaleFrames(chardir)
-	ScalebackgroundImage := handlers.ScalebackgroundImage(background)
+	scaledBackgroundImage := handlers.ScalebackgroundImage(background)
 
-	for i, image := range scaledFrames {
-		scaledFrames[i] = handlers.GenerateGifBackground(image, ScalebackgroundImage)
+	for i, img := range scaledFrames {
+		scaledFrames[i] = handlers.GenerateGifBackground(img, scaledBackgroundImage)
 	}
 
 	mstruct := Mood{
@@ -52,34 +53,30 @@ func (a *App) GetMoodImages(chardir string, background string) {
 		Delay:  delay,
 	}
 
-	switch background {
-	case "forest.png":
-		{
-			switch chardir {
-			case "oni_happy.gif":
-				a.CharacterMood.Happy.Forest = mstruct
-			case "oni_angry.gif":
-				a.CharacterMood.Angry.Forest = mstruct
-			case "oni_sad.gif":
-				a.CharacterMood.Sad.Forest = mstruct
-			case "oni_sick.gif":
-				a.CharacterMood.Sick.Forest = mstruct
-			}
-		}
-	case "ocean.png":
-		{
-			switch chardir {
-			case "oni_happy.gif":
-				a.CharacterMood.Happy.Ocean = mstruct
-			case "oni_angry.gif":
-				a.CharacterMood.Angry.Ocean = mstruct
-			case "oni_sad.gif":
-				a.CharacterMood.Sad.Ocean = mstruct
-			case "oni_sick.gif":
-				a.CharacterMood.Sick.Ocean = mstruct
-			}
-		}
+	states := map[string]*Location{
+		"oni_happy.gif": &a.CharacterMood.Happy,
+		"oni_angry.gif": &a.CharacterMood.Angry,
+		"oni_sad.gif":   &a.CharacterMood.Sad,
+		"oni_sick.gif":  &a.CharacterMood.Sick,
+		"oni_eating.gif": &a.CharacterMood.Eating,
 	}
+
+	state, ok := states[chardir]
+	if !ok || state == nil {
+		return
+	}
+
+	locations := map[string]*Mood{
+		"forest.png": &state.Forest,
+		"ocean.png":  &state.Ocean,
+		"barn.png":   &state.Barn,
+	}
+
+	loc, ok := locations[background]
+	if !ok || loc == nil {
+		return
+	}
+	*loc = mstruct
 }
 
 func (a *App) GetMoodGifs() {
@@ -97,20 +94,3 @@ func (a *App) GetMoodGifs() {
 	}
 
 }
-
-// func (a *App) SetMoodLocation(location, background string, mood Mood){
-// 	switch background{
-// 	case "forest.png":
-// 		switch location{
-// 		case "happy":
-// 			a.CharacterMood.Happy.Forest = mood
-// 		case "angry":
-// 			a.CharacterMood.Angry.Forest = mood
-// 		case "sad":
-// 			a.CharacterMood.Sad.Forest = mood
-// 		case "sick":
-
-// 	}
-// 		a.CharacterMood.Happy.Barn = mood
-// 	}
-// }

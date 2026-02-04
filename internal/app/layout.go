@@ -13,6 +13,8 @@ const (
 	SpriteDetails
 	SpriteLocation
 	SpriteHealth
+	SpriteHappiness
+	SpriteHunger
 )
 
 
@@ -23,7 +25,7 @@ type LayoutProperties struct {
 	Install    func(a *App, p LayoutProperties)
 }
 
-var Layoutorder = []LayoutFields{Title, Menu, Sprite, SpriteDetails, SpriteLocation, SpriteHealth}
+var Layoutorder = []LayoutFields{Title, Menu, Sprite, SpriteDetails, SpriteLocation, SpriteHealth, SpriteHappiness, SpriteHunger}
 
 var Layout = map[LayoutFields]LayoutProperties{
 	Menu: {
@@ -44,7 +46,8 @@ var Layout = map[LayoutFields]LayoutProperties{
 		Border: true,
 		Title:  "This is a title",
 		Install: func(a *App, p LayoutProperties) {
-			a.View.Header = a.TextView(p.Border, p.Title)
+			a.View.Header = a.FlexView(p.Border, p.Title).
+			AddItem(a.TextView(true, p.Title), 3, 1, true)
 		},
 	},
 	SpriteDetails: {
@@ -66,6 +69,20 @@ var Layout = map[LayoutFields]LayoutProperties{
 		Title:  "Health",
 		Install: func(a *App, p LayoutProperties) {
 			a.View.SpriteHealth = a.TextView(p.Border, p.Title)
+		},
+	},
+	SpriteHappiness: {
+		Border: true,
+		Title:  "Happiness",
+		Install: func(a *App, p LayoutProperties) {
+			a.View.SpriteHappiness = a.TextView(p.Border, p.Title)
+		},
+	},
+	SpriteHunger: {
+		Border: true,
+		Title:  "Hunger",
+		Install: func(a *App, p LayoutProperties) {
+			a.View.SpriteHunger = a.TextView(p.Border, p.Title)
 		},
 	},
 }
