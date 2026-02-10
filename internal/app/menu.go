@@ -1,6 +1,7 @@
 package app
 
 import (
+	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 )
 
@@ -31,7 +32,25 @@ func (a *App) SetCommands() {
 			Description: "feeds the creature",
 			Shortcut:    'f',
 			Run: func(a *App) {
-				a.Spriteinfo.Food += 1
+				if a.Spriteinfo.Food < Maxfood {
+					a.Spriteinfo.Food += 1
+				} else {
+					a.SetNewMessage("Oni is full", true, tcell.ColorIndianRed)
+				}
+			},
+		},
+		{
+			ID:          "water",
+			Menu:        "main",
+			Label:       "water",
+			Description: "waters the creature",
+			Shortcut:    'f',
+			Run: func(a *App) {
+				if a.Spriteinfo.Water < Maxwater {
+					a.Spriteinfo.Water += 1
+				} else {
+					a.SetNewMessage("Oni cant be watered", true, tcell.ColorDarkRed)
+				}
 			},
 		},
 		{
