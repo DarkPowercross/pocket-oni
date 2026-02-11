@@ -1,0 +1,20 @@
+package config
+
+import "fmt"
+
+func (c *Config) UpdateBar() {
+	header := c.App.Approot.View.Header
+	content := c.App.Approot.View.Content.Sub.SpriteInformation.SubInformationViews
+	information := c.SpriteInformation
+
+	header.HeaderThought.SetText(fmt.Sprintf("Thought: %s", "Oni is hungry"))
+	header.HeaderWeather.SetText(fmt.Sprintf("Weather: %s", "Sunny"))
+	header.HeaderFeedback.SetText(information.Message.GetMessage())
+	header.HeaderCharacter.SetText(information.GetState())
+
+	content.SpriteHunger.SetText(information.GetFood())
+	content.SpriteHappiness.SetText(information.GetHappiness())
+	content.SpriteWater.SetText(information.GetWater())
+	content.SpriteLocation.SetText(information.GetLocation())
+	content.SpriteHealth.SetText(information.GetHealth())
+}
