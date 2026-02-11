@@ -1,12 +1,14 @@
 package information
 
 import (
+	"fmt"
+
 	"github.com/Darkpowercross/pocket-oni/internal/config/information/infotools"
 	"github.com/Darkpowercross/pocket-oni/internal/config/references"
 	"github.com/gdamore/tcell/v2"
 )
 
-func (s *SpriteMetaData) AddWater(water int) {
+func (s *InformationMetaData) AddWater(water int) {
 	curwater := s.Water
 	if water <= 0 {
 		water = 1
@@ -26,9 +28,10 @@ func (s *SpriteMetaData) AddWater(water int) {
 	}
 }
 
-func (s *SpriteMetaData) GetWater() string {
-	Preamble := "Water: %s%s%s"
-	msg := infotools.IntToBar(s.Water)
+func (s *InformationMetaData) GetWater() string {
+	Preamble := infotools.GeneratePreamble("Water:", references.InformationIndent)
+	Percent := fmt.Sprintf(" %d%s", s.Water, "%")
+	msg := infotools.IntToBar(s.Water) + Percent
 
 	color := tcell.ColorBlue
 

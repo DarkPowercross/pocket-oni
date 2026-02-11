@@ -1,14 +1,12 @@
 package config
 
-import "fmt"
-
-func (c *Config) UpdateBar() {
+func (c *Config) UpdateTUIinformation() {
 	header := c.App.Approot.View.Header
 	content := c.App.Approot.View.Content.Sub.SpriteInformation.SubInformationViews
 	information := c.SpriteInformation
 
-	header.HeaderThought.SetText(fmt.Sprintf("Thought: %s", "Oni is hungry"))
-	header.HeaderWeather.SetText(fmt.Sprintf("Weather: %s", "Sunny"))
+	header.HeaderThought.SetText(information.GetThought())
+	header.HeaderWeather.SetText(information.GetWeather())
 	header.HeaderFeedback.SetText(information.Message.GetMessage())
 	header.HeaderCharacter.SetText(information.GetState())
 
@@ -17,4 +15,6 @@ func (c *Config) UpdateBar() {
 	content.SpriteWater.SetText(information.GetWater())
 	content.SpriteLocation.SetText(information.GetLocation())
 	content.SpriteHealth.SetText(information.GetHealth())
+	content.SpriteComfort.SetText(information.GetComfort())
 }
+

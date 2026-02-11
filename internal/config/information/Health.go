@@ -1,19 +1,22 @@
 package information
 
 import (
+	"fmt"
+
 	"github.com/Darkpowercross/pocket-oni/internal/config/information/infotools"
-	"github.com/gdamore/tcell/v2"
+	"github.com/Darkpowercross/pocket-oni/internal/config/references"
 )
 
-func (s *SpriteMetaData) SetHealth(n int) {
+func (s *InformationMetaData) SetHealth(n int) {
 	s.Health = n
 }
 
-func (s *SpriteMetaData) GetHealth() string {
-	Preamble := "Health: %s%d%s"
-	msg := s.Health
+func (s *InformationMetaData) GetHealth() string {
+	Preamble := infotools.GeneratePreamble("Health:", references.InformationIndent)
+	Percent := fmt.Sprintf(" %d%s", s.Health, "%")
+	msg := infotools.IntToBar(s.Health) + Percent
 
-	color := tcell.ColorOrangeRed
+	color := references.HealthColor
 
 	return infotools.FormatStrings(Preamble, msg, color)
 }

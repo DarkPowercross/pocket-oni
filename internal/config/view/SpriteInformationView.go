@@ -1,7 +1,9 @@
 package view
 
 import (
+	"github.com/Darkpowercross/pocket-oni/internal/config/references"
 	"github.com/Darkpowercross/pocket-oni/internal/config/view/tools"
+	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 )
 
@@ -38,8 +40,8 @@ type SubInformationViews struct {
 func (s *SpriteInformationView) SetSpriteInformationView() {
 	InformationOrder := []SpriteInformationViewTypes{
 		SpriteDetails,
-		SpriteHealth,
 		SpriteLocation,
+		SpriteHealth,
 		SpriteHappiness,
 		SpriteHunger,
 		SpriteWater,
@@ -48,60 +50,62 @@ func (s *SpriteInformationView) SetSpriteInformationView() {
 
 	var InformationLayout = map[SpriteInformationViewTypes]LayoutProperties{
 		SpriteDetails: {
-			Border: true,
+			Border: false,
 			Title:  "User details",
 			Install: func(p LayoutProperties) {
 				s.InformationView = tview.NewFlex().SetDirection(tview.FlexRow)
 				s.InformationView.SetBorder(p.Border)
+				s.InformationView.SetBackgroundColor(tcell.ColorAntiqueWhite)
 			},
 		},
 		SpriteLocation: {
 			Border: true,
 			Install: func(p LayoutProperties) {
-				s.SubInformationViews.SpriteLocation = tools.TextView(p.Border, p.Title)
-				s.SubInformationViews.SpriteLocation.SetDynamicColors(true)
-				s.InformationView.AddItem(s.SubInformationViews.SpriteLocation, 3, 1, true)
 
+				s.SubInformationViews.SpriteLocation = tools.TextView(p.Border, p.Title)
+				s.addStatView(&s.SubInformationViews.SpriteLocation)
+				s.InformationView.AddItem(s.SubInformationViews.SpriteLocation, 0, 1, true)
 			},
 		},
 		SpriteHealth: {
 			Border: true,
 			Install: func(p LayoutProperties) {
 				s.SubInformationViews.SpriteHealth = tools.TextView(p.Border, p.Title)
-				s.SubInformationViews.SpriteHealth.SetDynamicColors(true)
-				s.InformationView.AddItem(s.SubInformationViews.SpriteHealth, 3, 1, true)
+				s.addStatView(&s.SubInformationViews.SpriteHealth)
+				s.InformationView.AddItem(s.SubInformationViews.SpriteHealth, 0, 1, true)
 			},
 		},
 		SpriteHappiness: {
 			Border: true,
 			Install: func(p LayoutProperties) {
 				s.SubInformationViews.SpriteHappiness = tools.TextView(p.Border, p.Title)
-				s.SubInformationViews.SpriteHappiness.SetDynamicColors(true)
-				s.InformationView.AddItem(s.SubInformationViews.SpriteHappiness, 3, 1, true)
+				s.addStatView(&s.SubInformationViews.SpriteHappiness)
+				s.InformationView.AddItem(s.SubInformationViews.SpriteHappiness, 0, 1, true)
 			},
 		},
 		SpriteHunger: {
 			Border: true,
 			Install: func(p LayoutProperties) {
 				s.SubInformationViews.SpriteHunger = tools.TextView(p.Border, p.Title)
-				s.SubInformationViews.SpriteHunger.SetDynamicColors(true)
-				s.InformationView.AddItem(s.SubInformationViews.SpriteHunger, 3, 1, true)
+				s.addStatView(&s.SubInformationViews.SpriteHunger)
+				s.InformationView.AddItem(s.SubInformationViews.SpriteHunger, 0, 1, true)
 			},
 		},
 		SpriteWater: {
 			Border: true,
 			Install: func(p LayoutProperties) {
 				s.SubInformationViews.SpriteWater = tools.TextView(p.Border, p.Title)
-				s.SubInformationViews.SpriteWater.SetDynamicColors(true)
-				s.InformationView.AddItem(s.SubInformationViews.SpriteWater, 3, 1, true)
+				s.addStatView(&s.SubInformationViews.SpriteWater)
+				s.InformationView.AddItem(s.SubInformationViews.SpriteWater, 0, 1, true)
 			},
 		},
 		SpriteComfort: {
 			Border: true,
 			Install: func(p LayoutProperties) {
+
 				s.SubInformationViews.SpriteComfort = tools.TextView(p.Border, p.Title)
-				s.SubInformationViews.SpriteComfort.SetDynamicColors(true)
-				s.InformationView.AddItem(s.SubInformationViews.SpriteComfort, 3, 1, true)
+				s.addStatView(&s.SubInformationViews.SpriteComfort)
+				s.InformationView.AddItem(s.SubInformationViews.SpriteComfort, 0, 1, true)
 			},
 		},
 	}
@@ -114,4 +118,17 @@ func (s *SpriteInformationView) SetSpriteInformationView() {
 		layout.Install(layout)
 	}
 
+}
+
+func (s *SpriteInformationView) addStatView(tv **tview.TextView) {
+	*tv = tools.TextView(true, "")
+	(*tv).SetDynamicColors(true)
+	(*tv).SetBackgroundColor(references.BorderBackgrounds)
+	(*tv).SetBorderColor(references.BorderBackgrounds)
+	(*tv).SetBorderPadding(
+		references.SetBorderPaddingTop,
+		references.SetBorderPaddingBottom,
+		references.SetBorderPaddingLeft,
+		references.SetBorderPaddingRight,
+	)
 }

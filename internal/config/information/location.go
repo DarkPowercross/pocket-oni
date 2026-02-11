@@ -2,15 +2,16 @@ package information
 
 import (
 	"github.com/Darkpowercross/pocket-oni/internal/config/information/infotools"
+	"github.com/Darkpowercross/pocket-oni/internal/config/references"
 	"github.com/gdamore/tcell/v2"
 )
 
-func (s *SpriteMetaData) SetLocation(location string) {
+func (s *InformationMetaData) SetLocation(location string) {
 	s.Location = location
 }
 
-func (s *SpriteMetaData) GetLocation() string {
-	Preamble := "Location: %s%s%s"
+func (s *InformationMetaData) GetLocation() string {
+	Preamble := infotools.GeneratePreamble("Location:", references.InformationIndent)
 	msg := s.Location
 
 	color := tcell.ColorForestGreen

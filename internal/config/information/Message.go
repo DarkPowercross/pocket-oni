@@ -41,7 +41,7 @@ func (m *Message) StartFlash() {
 func (m *Message) GetMessage() string {
 	m.ExpireIfNeeded()
 
-	Preamble := "Message: %s%s%s"
+	Preamble := infotools.GeneratePreamble("Message:", references.HeaderIndent)
 	msg := m.Message
 
 	color := references.DefaultFontColor

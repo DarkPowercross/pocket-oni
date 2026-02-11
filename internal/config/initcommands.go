@@ -26,21 +26,21 @@ func (c *Config) InitCommands() {
 			Menu:        "main",
 			Label:       "water",
 			Description: "waters the creature",
-			Shortcut:    'w', // changed from duplicate 'f'
+			Shortcut:    'w',
 			Run: func() {
 				c.SpriteInformation.AddWater(1)
 			},
 		},
-		{
-			ID:          "pet",
-			Menu:        "main",
-			Label:       "pet",
-			Description: "play with your character",
-			Shortcut:    'p',
-			Run: func() {
-				c.SpriteInformation.Happiness++
-			},
-		},
+		// {
+		// 	ID:          "pet",
+		// 	Menu:        "main",
+		// 	Label:       "pet",
+		// 	Description: "play with your character",
+		// 	Shortcut:    'p',
+		// 	Run: func() {
+		// 		c.SpriteInformation.SetHappiness(1)
+		// 	},
+		// },
 		{
 			ID:          "move",
 			Menu:        "main",
@@ -51,8 +51,6 @@ func (c *Config) InitCommands() {
 				c.SetMenu("move")
 			},
 		},
-
-		// Move submenu
 
 		{
 			ID:          "ocean",
@@ -102,7 +100,6 @@ func (c *Config) InitCommands() {
 
 func (c *Config) SetMenu(menu string) {
 	menuView := c.App.Approot.View.Content.Sub.Menu
-
 	menuView.Clear()
 
 	for _, cmd := range c.Commands {
@@ -110,13 +107,24 @@ func (c *Config) SetMenu(menu string) {
 			continue
 		}
 
-		c := cmd
+		cmdCopy := cmd
 		menuView.AddItem(
-			c.Label,
-			c.Description,
-			c.Shortcut,
+			cmdCopy.Label,
+			cmdCopy.Description,
+			cmdCopy.Shortcut,
 			func() {
-				c.Run()
+				cmdCopy.Run()
+			},
+		)
+	}
+
+	if menu == "main" && c.SpriteInformation.Location == "barn" {
+		menuView.AddItem(
+			"clean",
+			"clean the barn area",
+			'c',
+			func() {
+				c.SpriteInformation.CleanWaste()
 			},
 		)
 	}

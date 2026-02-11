@@ -5,12 +5,13 @@ import (
 
 	"github.com/Darkpowercross/pocket-oni/internal/config/image"
 	"github.com/Darkpowercross/pocket-oni/internal/config/information"
+	"github.com/Darkpowercross/pocket-oni/internal/config/references"
 )
 
 type Config struct {
 	App               *App
 	Character         *image.CharacterImages
-	SpriteInformation information.SpriteMetaData
+	SpriteInformation information.InformationMetaData
 	Commands          []Command
 }
 
@@ -21,12 +22,15 @@ func (c *Config) ApplyConfig() {
 	c.Character.GetCharGifs()
 	c.App.InputHandler()
 
-	c.SpriteInformation = information.SpriteMetaData{
-		State:    "Happy",
-		Location: "Forest",
-		Health:   100,
-		Food:     100,
-		Water:    100,
+	c.SpriteInformation = information.InformationMetaData{
+		State:     "Happy",
+		Location:  "Forest",
+		Health:    references.MaxHealth,
+		Food:      references.Maxfood,
+		Water:     references.Maxwaste,
+		Waste:     references.MinWaste,
+		Happiness: references.MaxHappiness,
+		Comfort:   references.MaxComfort,
 	}
 
 	c.InitCommands()
@@ -37,4 +41,5 @@ func (c *Config) ApplyConfig() {
 	)
 
 	go c.AnimateTUI(context.Background())
+	go c.SpriteInformation.InformationLogic()
 }

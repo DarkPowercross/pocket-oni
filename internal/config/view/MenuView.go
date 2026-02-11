@@ -1,7 +1,9 @@
 package view
 
 import (
+	"github.com/Darkpowercross/pocket-oni/internal/config/references"
 	"github.com/Darkpowercross/pocket-oni/internal/config/view/tools"
+	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 )
 
@@ -30,6 +32,13 @@ func (s *MenuView) SetMenuView() {
 			Title:  "Menu",
 			Install: func(p LayoutProperties) {
 				s.Menu = tools.List(p.Border, p.Title)
+				menuView := s.Menu
+				menuView.SetMainTextColor(references.BorderBackgrounds)
+				menuView.SetSecondaryTextColor(references.BorderBackgrounds)
+				menuView.SetBackgroundColor(references.BorderBackgrounds)
+				menuView.SetSelectedBackgroundColor(tcell.ColorBlue)
+				menuView.SetSelectedTextColor(references.BorderBackgrounds)
+				menuView.SetBorderColor(references.BorderBackgrounds)
 			},
 		},
 	}

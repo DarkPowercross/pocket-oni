@@ -3,6 +3,7 @@ package view
 import (
 	"image"
 
+	"github.com/Darkpowercross/pocket-oni/internal/config/references"
 	"github.com/Darkpowercross/pocket-oni/internal/config/view/tools"
 	"github.com/rivo/tview"
 )
@@ -33,6 +34,8 @@ func (s *SpriteView) SetSpriteView() {
 			Title:  "Oni",
 			Install: func(p LayoutProperties) {
 				s.Sprite = tools.Image(p.Border, p.Title)
+				s.Sprite.SetBackgroundColor(references.BorderBackgrounds)
+				s.Sprite.SetBorderColor(references.BorderBackgrounds)
 			},
 		},
 	}
@@ -46,6 +49,6 @@ func (s *SpriteView) SetSpriteView() {
 	}
 }
 
-func(s *SpriteView) UpdateSprite(frame image.Image){
+func (s *SpriteView) UpdateSprite(frame image.Image) {
 	s.Sprite.SetImage(frame)
 }

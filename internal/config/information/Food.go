@@ -1,12 +1,14 @@
 package information
 
 import (
+	"fmt"
+
 	"github.com/Darkpowercross/pocket-oni/internal/config/information/infotools"
 	"github.com/Darkpowercross/pocket-oni/internal/config/references"
 	"github.com/gdamore/tcell/v2"
 )
 
-func (s *SpriteMetaData) AddFood(Food int) {
+func (s *InformationMetaData) AddFood(Food int) {
 	curfood := s.Food
 	if Food <= 0 {
 		Food = 1
@@ -16,19 +18,19 @@ func (s *SpriteMetaData) AddFood(Food int) {
 		if Food+curfood <= 100 {
 			curfood = 100
 		}
-		curfood += Food
 	} else {
 		s.Message.SetNewMessage(
 			"Oni is full",
 			true,
-			tcell.ColorIndianRed,
+			references.Error,
 		)
 	}
 }
 
-func (s *SpriteMetaData) GetFood() string {
-	Preamble := "Food: %s%s%s"
-	msg := infotools.IntToBar(s.Food)
+func (s *InformationMetaData) GetFood() string {
+	Preamble := infotools.GeneratePreamble("Food:", references.InformationIndent)
+	Percent := fmt.Sprintf(" %d%s", s.Food, "%")
+	msg := infotools.IntToBar(s.Food) + Percent
 
 	color := tcell.ColorGreen
 

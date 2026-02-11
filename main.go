@@ -3,14 +3,16 @@ package main
 import (
 	"fmt"
 
-	appnew "github.com/Darkpowercross/pocket-oni/internal/config"
+	"github.com/Darkpowercross/pocket-oni/internal/config"
 	"github.com/Darkpowercross/pocket-oni/internal/config/image"
 )
 
 func main() {
-	app := &appnew.App{}
+	app := &config.App{}
 
-	c := &appnew.Config{
+	
+
+	c := &config.Config{
 		App:       app,
 		Character: &image.CharacterImages{},
 	}
@@ -20,5 +22,4 @@ func main() {
 		fmt.Println("err: ", err)
 		return
 	}
-
 }

@@ -1,6 +1,7 @@
 package view
 
 import (
+	"github.com/Darkpowercross/pocket-oni/internal/config/references"
 	"github.com/Darkpowercross/pocket-oni/internal/config/view/tools"
 	"github.com/rivo/tview"
 )
@@ -19,6 +20,11 @@ type Subcontent struct {
 func (c *Content) SetContent() {
 	root := tools.FlexView(false, "")
 	root.SetDirection(tview.FlexColumn)
+	root.SetBorderPadding(references.SetBorderPaddingTop,
+		references.SetBorderPaddingBottom,
+		references.SetBorderPaddingLeft,
+		references.SetBorderPaddingRight)
+	root.SetBackgroundColor(references.BorderBackgrounds)
 
 	c.Sub.Menu.SetMenuView()
 	c.Sub.Sprite.SetSpriteView()

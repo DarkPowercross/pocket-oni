@@ -1,6 +1,7 @@
 package view
 
 import (
+	"github.com/Darkpowercross/pocket-oni/internal/config/references"
 	"github.com/Darkpowercross/pocket-oni/internal/config/view/tools"
 	"github.com/rivo/tview"
 )
@@ -17,6 +18,9 @@ type HeaderView struct {
 func (h *HeaderView) SetHeaderView() {
 	root := tools.FlexView(true, "")
 	root.SetDirection(tview.FlexColumn)
+	root.SetBackgroundColor(references.BorderBackgrounds)
+	root.SetBorderColor(references.BorderBackgrounds)
+	
 
 	h.HeaderFeedback = buildHeaderText()
 	h.HeaderWeather = buildHeaderText()
@@ -39,5 +43,6 @@ func (h *HeaderView) Get() *tview.Flex {
 func buildHeaderText() *tview.TextView {
 	tv := tools.TextView(false, "")
 	tv.SetDynamicColors(true)
+	tv.SetBackgroundColor(references.BorderBackgrounds)
 	return tv
 }

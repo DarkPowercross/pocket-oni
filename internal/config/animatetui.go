@@ -33,7 +33,7 @@ func (c *Config) AnimateTUI(ctx context.Context) {
 			c.App.App.QueueUpdateDraw(func() {
 				c.App.Approot.View.Content.Sub.Sprite.UpdateSprite(frame)
 
-				c.UpdateBar()
+				c.UpdateTUIinformation()
 			})
 		}
 	}
