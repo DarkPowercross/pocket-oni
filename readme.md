@@ -3,7 +3,7 @@
 A simple, terminal-based virtual pet inspired by classic Tamagotchi games.  
 Take care of your creature by feeding it, playing with it, and keeping its stats balanced.  
 
-![oni](internal/characters/oni_happy.gif)
+![oni](https://github.com/DarkPowercross/pocket-oni/blob/main/internal/characters/oni/65x65/oni_happy.gif)
 
 
 Watch your pet's **Happiness**, **Hunger**, **Energy**, and **Hygiene** as they change over time, and make sure it stays healthy!
