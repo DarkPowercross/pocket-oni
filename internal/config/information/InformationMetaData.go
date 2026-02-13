@@ -1,17 +1,19 @@
 package information
 
+import "github.com/Darkpowercross/pocket-oni/internal/config/appenums"
+
 type InformationMetaData struct {
-	Health    int
-	Food      int
-	Water     int
-	Comfort   int
-	Happiness int
+	Health    float64
+	Food      float64
+	Water     float64
+	Comfort   float64
+	Happiness float64
 
-	Waste int
+	Waste float64
 
-	Location string
-	Weather  string
-	State    string
+	Location appenums.Locations
+	Weather  Weather
+	State    appenums.Mood
 
 	Message Message
 }

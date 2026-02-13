@@ -1,5 +1,7 @@
 package config
 
+import "github.com/Darkpowercross/pocket-oni/internal/config/appenums"
+
 type Command struct {
 	ID          string
 	Menu        string
@@ -18,7 +20,7 @@ func (c *Config) InitCommands() {
 			Description: "feeds the creature",
 			Shortcut:    'f',
 			Run: func() {
-				c.SpriteInformation.AddFood(1)
+				c.SpriteInformation.AddFoodMessage(1)
 			},
 		},
 		{
@@ -28,7 +30,7 @@ func (c *Config) InitCommands() {
 			Description: "waters the creature",
 			Shortcut:    'w',
 			Run: func() {
-				c.SpriteInformation.AddWater(1)
+				c.SpriteInformation.AddWaterMessage(1)
 			},
 		},
 		// {
@@ -59,7 +61,7 @@ func (c *Config) InitCommands() {
 			Description: "go to the ocean",
 			Shortcut:    'o',
 			Run: func() {
-				c.SpriteInformation.Location = "ocean"
+				c.SpriteInformation.Location = appenums.Ocean
 				c.SetMenu("main")
 			},
 		},
@@ -70,7 +72,7 @@ func (c *Config) InitCommands() {
 			Description: "go to the forest",
 			Shortcut:    'f',
 			Run: func() {
-				c.SpriteInformation.Location = "forest"
+				c.SpriteInformation.Location = appenums.Forest
 				c.SetMenu("main")
 			},
 		},
@@ -81,7 +83,7 @@ func (c *Config) InitCommands() {
 			Description: "go to the barn",
 			Shortcut:    'b',
 			Run: func() {
-				c.SpriteInformation.Location = "barn"
+				c.SpriteInformation.Location = appenums.Barn
 				c.SetMenu("main")
 			},
 		},
@@ -118,7 +120,7 @@ func (c *Config) SetMenu(menu string) {
 		)
 	}
 
-	if menu == "main" && c.SpriteInformation.Location == "barn" {
+	if menu == "main" && c.SpriteInformation.Location == appenums.Barn {
 		menuView.AddItem(
 			"clean",
 			"clean the barn area",

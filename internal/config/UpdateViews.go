@@ -6,7 +6,7 @@ func (c *Config) UpdateTUIinformation() {
 	information := c.SpriteInformation
 
 	header.HeaderThought.SetText(information.GetThought())
-	header.HeaderWeather.SetText(information.GetWeather())
+	header.HeaderWeather.SetText(information.Weather.GetWeather())
 	header.HeaderFeedback.SetText(information.Message.GetMessage())
 	header.HeaderCharacter.SetText(information.GetState())
 

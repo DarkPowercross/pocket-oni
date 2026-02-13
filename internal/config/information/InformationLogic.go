@@ -4,7 +4,13 @@ import "time"
 
 func (s *InformationMetaData) InformationLogic() {
 	for {
+		time.Sleep(10 * time.Second)
 		s.UpdateHappiness()
-		time.Sleep(time.Second)
+		s.Weather.SetWeather("")
+		s.UpdateComfort()
+		s.UpdateWater()
+		s.UpdateFood()
+		s.UpdateHealth()
+
 	}
 }

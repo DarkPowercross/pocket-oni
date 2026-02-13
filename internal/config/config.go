@@ -3,6 +3,7 @@ package config
 import (
 	"context"
 
+	"github.com/Darkpowercross/pocket-oni/internal/config/appenums"
 	"github.com/Darkpowercross/pocket-oni/internal/config/image"
 	"github.com/Darkpowercross/pocket-oni/internal/config/information"
 	"github.com/Darkpowercross/pocket-oni/internal/config/references"
@@ -22,9 +23,11 @@ func (c *Config) ApplyConfig() {
 	c.Character.GetCharGifs()
 	c.App.InputHandler()
 
+	c.SpriteInformation.Weather.SetWeather("Sunny")
+
 	c.SpriteInformation = information.InformationMetaData{
-		State:     "Happy",
-		Location:  "Forest",
+		State:     appenums.Happy,
+		Location:  appenums.Forest,
 		Health:    references.MaxHealth,
 		Food:      references.Maxfood,
 		Water:     references.Maxwaste,

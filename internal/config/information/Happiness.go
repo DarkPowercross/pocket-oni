@@ -7,7 +7,7 @@ import (
 	"github.com/Darkpowercross/pocket-oni/internal/config/references"
 )
 
-func (s *InformationMetaData) AdjustHappiness(delta int) {
+func (s *InformationMetaData) AdjustHappiness(delta float64) {
 	newValue := s.Happiness + delta
 
 	if newValue > references.MaxHappiness {
@@ -25,7 +25,7 @@ func (s *InformationMetaData) AdjustHappiness(delta int) {
 
 func (s *InformationMetaData) GetHappiness() string {
 	Preamble := infotools.GeneratePreamble("Happiness:", references.InformationIndent)
-	Percent := fmt.Sprintf(" %d%s", s.Happiness, "%")
+	Percent := fmt.Sprintf(" %.0f%s", s.Happiness, "%")
 	msg := infotools.IntToBar(s.Happiness) + Percent
 
 	color := references.Happiness
@@ -36,7 +36,7 @@ func (s *InformationMetaData) GetHappiness() string {
 func (s *InformationMetaData) UpdateHappiness() {
 	total :=
 		statImpact(s.Food) +
-			statImpact(s.Water) +
+			WaterImpact(s.Water) +
 			statImpact(s.Comfort)
 
 	healthModifier := HealthImpact(s.Health)
@@ -45,7 +45,7 @@ func (s *InformationMetaData) UpdateHappiness() {
 	s.AdjustHappiness(modifier)
 }
 
-func statImpact(value int) int {
+func statImpact(value float64) float64 {
 	switch {
 	case value >= 80:
 		return 1
@@ -60,10 +60,10 @@ func statImpact(value int) int {
 	}
 }
 
-func WaterImpact(value int) int {
+func WaterImpact(value float64) float64 {
 	switch {
 	case value >= 80:
-		return 0
+		return 1
 	case value >= 60:
 		return -2
 	case value >= 40:
@@ -75,10 +75,10 @@ func WaterImpact(value int) int {
 	}
 }
 
-func HealthImpact(value int) int {
+func HealthImpact(value float64) float64 {
 	switch {
 	case value >= 80:
-		return 0
+		return 1
 	case value >= 60:
 		return -1
 	case value >= 40:

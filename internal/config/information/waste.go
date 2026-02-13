@@ -5,7 +5,7 @@ import (
 	"github.com/gdamore/tcell/v2"
 )
 
-func (s *InformationMetaData) AddWaste(n int) {
+func (s *InformationMetaData) AddWaste(n float64) {
 	curwaste := s.Waste
 	if n <= 0 {
 		n = 1

@@ -33,8 +33,8 @@ func (s *MenuView) SetMenuView() {
 			Install: func(p LayoutProperties) {
 				s.Menu = tools.List(p.Border, p.Title)
 				menuView := s.Menu
-				menuView.SetMainTextColor(references.BorderBackgrounds)
-				menuView.SetSecondaryTextColor(references.BorderBackgrounds)
+				menuView.SetMainTextColor(tcell.ColorAntiqueWhite)
+				menuView.SetSecondaryTextColor(tcell.ColorBlue)
 				menuView.SetBackgroundColor(references.BorderBackgrounds)
 				menuView.SetSelectedBackgroundColor(tcell.ColorBlue)
 				menuView.SetSelectedTextColor(references.BorderBackgrounds)

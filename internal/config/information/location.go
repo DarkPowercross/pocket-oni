@@ -1,12 +1,13 @@
 package information
 
 import (
+	"github.com/Darkpowercross/pocket-oni/internal/config/appenums"
 	"github.com/Darkpowercross/pocket-oni/internal/config/information/infotools"
 	"github.com/Darkpowercross/pocket-oni/internal/config/references"
 	"github.com/gdamore/tcell/v2"
 )
 
-func (s *InformationMetaData) SetLocation(location string) {
+func (s *InformationMetaData) SetLocation(location appenums.Locations) {
 	s.Location = location
 }
 
