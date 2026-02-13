@@ -16,4 +16,5 @@ type InformationMetaData struct {
 	State    appenums.Mood
 
 	Message Message
+	Thought Message
 }

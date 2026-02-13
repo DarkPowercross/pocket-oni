@@ -66,7 +66,7 @@ func (m *Message) GetMessage() string {
 }
 
 func (m *Message) ExpireIfNeeded() bool {
-	if m.Message != "" && time.Since(m.LastSet) > 3*time.Second {
+	if m.Message != "" && time.Since(m.LastSet) > 5*time.Second {
 		m.Message = ""
 		return true
 	}

@@ -28,10 +28,11 @@ func (h *HeaderView) SetHeaderView() {
 	h.HeaderThought = buildHeaderText()
 
 	root.
-		AddItem(h.HeaderFeedback, 0, 1, true).
+		AddItem(h.HeaderFeedback, 60, 1, true).
+		AddItem(h.HeaderThought, 80, 1, true).
 		AddItem(h.HeaderWeather, 0, 1, true).
-		AddItem(h.HeaderCharacter, 0, 1, true).
-		AddItem(h.HeaderThought, 0, 1, true)
+		AddItem(h.HeaderCharacter, 0, 1, true)
+		
 
 	h.root = root
 }

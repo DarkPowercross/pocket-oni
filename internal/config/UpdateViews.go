@@ -5,7 +5,7 @@ func (c *Config) UpdateTUIinformation() {
 	content := c.App.Approot.View.Content.Sub.SpriteInformation.SubInformationViews
 	information := c.SpriteInformation
 
-	header.HeaderThought.SetText(information.GetThought())
+	header.HeaderThought.SetText(information.Thought.GetMessage())
 	header.HeaderWeather.SetText(information.Weather.GetWeather())
 	header.HeaderFeedback.SetText(information.Message.GetMessage())
 	header.HeaderCharacter.SetText(information.GetState())
