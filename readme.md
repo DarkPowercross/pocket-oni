@@ -5,7 +5,6 @@ Take care of your creature by feeding it, playing with it, and keeping its stats
 
 ![oni](https://github.com/DarkPowercross/pocket-oni/blob/main/internal/characters/oni/65x65/oni_happy.gif)
 
-
 Watch your pet's **Happiness**, **Hunger**, **Energy**, and **Hygiene** as they change over time, and make sure it stays healthy!
 
 ---
@@ -29,10 +28,9 @@ Watch your pet's **Happiness**, **Hunger**, **Energy**, and **Hygiene** as they 
 ### Clone & Run
 
 ```bash
-git clone github.com/Darkpowercross/pocket-oni.git
+git clone https://github.com/Darkpowercross/pocket-oni.git
 cd pocket-oni
 go run .
-
 
 Build Executable
 
