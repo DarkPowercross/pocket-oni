@@ -26,9 +26,9 @@ Watch your pet's **Happiness**, **Hunger**, **Energy**, and **Hygiene** as they 
 ### Clone & Run
 
 ```bash
-git clone https://github.com/yourname/pocket-oni.git
+git clone github.com/Darkpowercross/pocket-oni.git
 cd pocket-oni
-go run ./cmd
+go run .
 
 
 Build Executable
