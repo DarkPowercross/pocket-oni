@@ -56,3 +56,9 @@ go build -o pocket-oni ./cmd
 ## Usage
 
 ![alt text](example.png)
+
+## Contributing
+
+### Submit a pull request
+
+If you'd like to contribute, please fork the repository and open a pull request to the `main` branch.
